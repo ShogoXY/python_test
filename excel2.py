@@ -1,8 +1,6 @@
 # dobra to teraz testujemy
 import openpyxl
 import os
-# import msvcrt
-# import keyboard
 os.chdir("/home/fedora/python_test")
 
 # Path
