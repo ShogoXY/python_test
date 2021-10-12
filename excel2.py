@@ -1,6 +1,9 @@
 # dobra to teraz testujemy
 import openpyxl
 import os
+
+# dobra test dwa dla gita
+
 os.chdir("/home/fedora/python_test")
 
 # Path
