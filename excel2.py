@@ -10,7 +10,7 @@ wb = openpyxl.load_workbook('test1.xlsx')
 
 # active worksheet data
 ws = wb.active
-print("\nBy wyjść naciśniej ESC+ENTER\n")
+print("\nBy wyjść naciśniej ENTER\n")
 print("podaj komentarz do wpisania")
 commet = input()
 
