@@ -1,9 +1,9 @@
 # dobra to teraz testujemy
 import openpyxl
 import os
-import msvcrt
-import keyboard
-os.chdir("C:\\Users\\Dariusz\\Desktop\\Śmieci\\python")
+# import msvcrt
+# import keyboard
+os.chdir("/home/fedora/python_test")
 
 # Path
 wb = openpyxl.load_workbook('test1.xlsx')
@@ -22,12 +22,11 @@ while 1:
                     print(ws.cell(i, j))
                     test = ws.cell(i, 6)
                     test.value = commet
-                
-    search_word=input("podaj wartość którą chcesz wyszukać\n")
+
+    search_word = input("podaj wartość którą chcesz wyszukać\n")
     wordfinder(search_word)
 
     if search_word == "":
         wb.save('test1.xlsx')
-        print ("zapisane wychodzę")
+        print("zapisane wychodzę")
         break
-
