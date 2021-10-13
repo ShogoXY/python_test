@@ -10,9 +10,13 @@ os.chdir("/home/fedora/git/python_test")
 wb = openpyxl.load_workbook('test.xlsx')
 ws = wb['Arkusz1']
 searchString = input("podaj wartość którą chcesz wyszukać\n")
+
+# zapytanie czy dany arkusz istnieje
 if searchString not in wb.sheetnames:
     wb.create_sheet(searchString)
     ws_1 = wb[searchString]
+
+# jesli nie tworzy go i wypisuje dane
     for i in range(1, ws.max_row + 1):
         if searchString == ws.cell(i, 5).value:
             commet = ws.cell(i, 11).value
@@ -26,12 +30,14 @@ if searchString not in wb.sheetnames:
                     ws_1.cell(i, 1).value = pn
                     ws_1.cell(i, 2).value = sn
 
+# usuwanie pustych rekordów
     count = 0
     for row in ws_1:
         if all([cell.value == None for cell in row]):
             count += 1
     ws_1.delete_rows(1, count)
 
+# jeśli istenieje wypisuje na ekranie dane
 else:
     for i in range(1, ws.max_row + 1):
         if searchString == ws.cell(i, 5).value:
@@ -44,5 +50,5 @@ else:
                              " \nSeryjny --  " + sn + "\n")
                     print(gwara)
 
-
+# zapisuje arkusz
 wb.save('test.xlsx')
