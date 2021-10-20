@@ -52,15 +52,55 @@ for i in range(df1.shape[0]):
 print(str(df1.values[i, j]))
 doc.save(path_docx)
 
+# '
+#input = Document('OutputDoc.docx')
 
-input = Document('word1.docx')
+#paragraphs = []
+# for para in input.paragraphs:
+#    p = para.text
+#    paragraphs.append(p)
 
-paragraphs = []
-for para in input.paragraphs:
-    p = para.text
-    paragraphs.append(p)
+#output = Document()
+# for item in paragraphs:
+#    output.add_paragraph(item)
+# output.save('word1.docx')
+#
 
-output = Document()
-for item in paragraphs:
-    output.add_paragraph(item)
-output.save('OutputDoc.docx')
+# Imports
+
+input_doc = Document('OutputDoc.docx')
+output_doc = Document()
+
+# Call the function
+
+
+def get_para_data(output_doc_name, paragraph):
+
+    output_para = output_doc_name.add_paragraph()
+    for run in paragraph.runs:
+        output_run = output_para.add_run(run.text)
+        # Run's bold data
+        output_run.bold = run.bold
+        # Run's italic data
+        output_run.italic = run.italic
+        # Run's underline data
+        output_run.underline = run.underline
+        # Run's color data
+        output_run.font.color.rgb = run.font.color.rgb
+        # Run's font data
+        output_run.style.name = run.style.name
+        output_run.font.size = run.font.size
+        #output_run.line_spacing_rule = run.line_spacing_rule
+        #output_run.left_indent.pt = run.left_indent.pt
+        # Paragraph's alignment data
+    output_para.paragraph_format.alignment = paragraph.paragraph_format.alignment
+    output_para.paragraph_format.line_spacing_rule = paragraph.paragraph_format.line_spacing_rule
+    output_para.paragraph_format.left_indent = paragraph.paragraph_format.left_indent
+    output_para.paragraph_format.right_indent = paragraph.paragraph_format.left_indent
+    output_para.paragraph_format.first_line_indent = paragraph.paragraph_format.left_indent
+
+
+for para in input_doc.paragraphs:
+    get_para_data(output_doc, para)
+
+output_doc.save('OutputDoc2.docx')
