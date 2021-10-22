@@ -22,8 +22,12 @@ cr = time.strftime('%y%m%d%H%M')
 cr2=("CRS"+cr)
 print(cr2)
 
+nazwa = input("podaj klienta \n")
 
 
+doc=DocxTemplate(path_docx)
+context = {'date' : ct, 'cr_number' : cr2, 'nazwa' : nazwa, 'data' : ct}
+doc.render(context)
 
 # search value in excel sheet (if yes, pritn it)
 df = pd.read_excel(path_file, sheet_name='Arkusz1')
@@ -38,18 +42,7 @@ def search(keyword, df):
     return searched
     
 search_df = search([search_word], df)
-    
-    
-    
-#search_df = df.loc[df["RMA"] == search_word2]
 
-# print value in specific column and search with this value
-#komentarz_search = search_df['KOMENTARZ'].values[0]
-#print(komentarz_search)
-#komentarz_df = df.loc[df['KOMENTARZ'] == komentarz_search]
-#print(komentarz_df)
-
-# write value to new sheet in same workbook
 excel_book = load_workbook(path_file)
 writer = pd.ExcelWriter(path_file, engine='openpyxl',
                         mode='a', if_sheet_exists='replace')
@@ -66,76 +59,14 @@ writer.save()
 writer.close()
 
 
-## word create table in word
-#table = doc.add_table(df1.shape[0]+1, df1.shape[1], style='Table Grid')
-
-#for j in range(df1.shape[-1]):
-    
-#    table.cell(0, j).text = df1.columns[j]
-    
-
 for i in range(df1.shape[0]):
     doc.tables[0].add_row() 
     for j in range(df1.shape[-1]):
-        #table.cell(i+1, j).text = str(df1.values[i, j])
         table2=doc.tables[0]
         table2.cell(i+1, j+1).text=str(df1.values[i, j])
         table2.cell(i+1, 0).text = str(i+1)
-        
-        
-        
-# n=i+1
-# print (n)
-# for k in range(1,n):
-#     m = str(k) 
-#     print("test_" + m +"")        
-#     table2=doc.tables[0]
-#     table2.cell(k,1).text=df3   
-#     doc.tables[0].add_row()     
-doc.save(path_docx)
 
 
-# '
-#input = Document('OutputDoc.docx')
 
-#paragraphs = []
-# for para in input.paragraphs:
-#    p = para.text
-#    paragraphs.append(p)
+doc.save("rozliczenie "+ cr2 + " " + nazwa+".docx")
 
-#output = Document()
-# for item in paragraphs:
-#    output.add_paragraph(item)
-# output.save('word1.docx')
-#
-
-# Imports
-
-#input_doc = Document('OutputDoc.docx')
-#output_doc = Document()
-
-# Call the function
-
-
-# def get_para_data(output_doc_name, paragraph):
-# 
-#     output_para = output_doc_name.add_paragraph()
-#     for run in paragraph.runs:
-#         output_run = output_para.add_run(run.text)
-#         output_run.bold = run.bold
-#         output_run.italic = run.italic
-#         output_run.underline = run.underline
-#         output_run.font.color.rgb = run.font.color.rgb
-#         output_run.style.name = run.style.name
-#         output_run.font.size = run.font.size
-#     output_para.paragraph_format.alignment = paragraph.paragraph_format.alignment
-#     output_para.paragraph_format.line_spacing_rule = paragraph.paragraph_format.line_spacing_rule
-#     output_para.paragraph_format.left_indent = paragraph.paragraph_format.left_indent
-#     output_para.paragraph_format.right_indent = paragraph.paragraph_format.left_indent
-#     output_para.paragraph_format.first_line_indent = paragraph.paragraph_format.left_indent
-# 
-# 
-# for para in input_doc.paragraphs:
-#     get_para_data(output_doc, para)
-# 
-# output_doc.save('OutputDoc2.docx')
