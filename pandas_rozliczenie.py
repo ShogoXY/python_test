@@ -66,25 +66,32 @@ writer.save()
 writer.close()
 
 
-# word create table in word
-table = doc.add_table(df1.shape[0]+1, df1.shape[1], style='Table Grid')
+## word create table in word
+#table = doc.add_table(df1.shape[0]+1, df1.shape[1], style='Table Grid')
 
-for j in range(df1.shape[-1]):
-    table.cell(0, j).text = df1.columns[j]
+#for j in range(df1.shape[-1]):
+    
+#    table.cell(0, j).text = df1.columns[j]
+    
 
 for i in range(df1.shape[0]):
+    doc.tables[0].add_row() 
     for j in range(df1.shape[-1]):
-        table.cell(i+1, j).text = str(df1.values[i, j])
+        #table.cell(i+1, j).text = str(df1.values[i, j])
+        table2=doc.tables[0]
+        table2.cell(i+1, j+1).text=str(df1.values[i, j])
+        table2.cell(i+1, 0).text = str(i+1)
         
         
-n=i+1
-print (n)
-for k in range(1,n):
-    m = str(k) 
-    print("test_" + m +"")        
-    table2=doc.tables[0]
-    table2.cell(k,1).text=df3   
-    doc.tables[0].add_row()     
+        
+# n=i+1
+# print (n)
+# for k in range(1,n):
+#     m = str(k) 
+#     print("test_" + m +"")        
+#     table2=doc.tables[0]
+#     table2.cell(k,1).text=df3   
+#     doc.tables[0].add_row()     
 doc.save(path_docx)
 
 
