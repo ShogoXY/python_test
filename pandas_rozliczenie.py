@@ -7,6 +7,7 @@ import numpy as np
 from openpyxl import load_workbook
 import datetime
 import time
+from re import search
 
 # file path
 path_file = "C:\\Users\\Dariusz\\github\\python_test\\serwi.xlsx"
@@ -20,15 +21,27 @@ print (ct)
 cr = time.strftime('%y%m%d%H%M')
 cr2=("CRS"+cr)
 print(cr2)
+
+
+
+
 # search value in excel sheet (if yes, pritn it)
 df = pd.read_excel(path_file, sheet_name='Arkusz1')
 print (df)
 search_word = input("podaj numer seryjny do wyszukania \n")
 search_word2 = str(search_word)
 print(type(search_word2))
-print (type(search_word))
 
-search_df = df.loc[df["RMA"] == search_word2]
+def search(keyword, df):
+    search = '|'.join(keyword)
+    searched = df[df['RMA'].str.contains(search, na=False)]
+    return searched
+    
+search_df = search([search_word], df)
+    
+    
+    
+#search_df = df.loc[df["RMA"] == search_word2]
 
 # print value in specific column and search with this value
 #komentarz_search = search_df['KOMENTARZ'].values[0]
@@ -64,7 +77,7 @@ for i in range(df1.shape[0]):
         table.cell(i+1, j).text = str(df1.values[i, j])
         
         
-n=5
+n=i+1
 print (n)
 for k in range(1,n):
     m = str(k) 
