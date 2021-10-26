@@ -32,21 +32,15 @@ doc = DocxTemplate(path_docx)
 context = {'date': ct, 'cr_number': cr2, 'nazwa': nazwa, 'data': ct}
 doc.render(context)
 
-# search value in excel sheet (if yes, pritn it)
+
 df = pd.read_excel(path_file, sheet_name='Arkusz1')
 print(df)
-# search_word = input("podaj numer RMA \n")
-# search_word2 = str(search_word)
-# print(type(search_word2))
+
 df_name = "arkusz_test"
 excel_book = openpyxl.load_workbook(path_file)
-print(excel_book.sheetnames)
-
 
 if df_name not in excel_book.sheetnames:
     excel_book.create_sheet(df_name)
-
-print(excel_book.sheetnames)
 excel_book.save(path_file)
 
 writer = pd.ExcelWriter(path_file, engine='openpyxl',
@@ -70,16 +64,10 @@ while 1:
 
         df1 = pd.DataFrame(search_df, columns=['RMA', 'Nazwa urządzenia',
                            'Nr seryjny przyjęty', 'Nr seryjny wydany', 'UWAGI'])
-
-        # df1.to_excel(writer, sheet_name='arkusz_test')
-        df1.to_excel(writer, sheet_name='arkusz_test')
-
         writer.save()
         df2 = pd.read_excel(path_file, sheet_name='arkusz_test')
-        df3 = df2.append(df1)
-        # df2 = df1
-        # df1.loc[df1.shape[0]]
-        # df3.to_excel(writer, sheet_name='arkusz_test')
+        df3 = df2.append(df1, ignore_index=True)
+        df3.to_excel(writer, sheet_name='arkusz_test', index=False)
         print(df3)
 
         writer.save()
@@ -87,14 +75,6 @@ while 1:
     # save nd exit excel
         continue
 
-writer.save()
-writer.close()
-#
-
-df5 = pd.DataFrame(['RMA', 'Nazwa urządzenia', 'Nr seryjny przyjęty',
-                    'Nr seryjny wydany', 'UWAGI'])
-df5.to_excel(writer, sheet_name='arkusz_test')
-print(df5)
 for i in range(df3.shape[0]):
     doc.tables[0].add_row()
     for j in range(df3.shape[-1]):
@@ -104,4 +84,6 @@ for i in range(df3.shape[0]):
 
 
 doc.save("rozliczenie " + cr2 + " " + nazwa+".docx")
-excel_book.remove_sheet("arkusz_test")
+del excel_book[df_name]
+excel_book.save(path_file)
+excel_book.close()
