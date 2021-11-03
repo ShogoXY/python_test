@@ -4,6 +4,7 @@ import docx
 from docx import Document
 from docxtpl import DocxTemplate, InlineImage
 import numpy as np
+from numpy import nan
 import openpyxl
 import re
 # from openpyxl import load_workbook
@@ -38,6 +39,7 @@ doc.render(context)
 
 df = pd.read_excel(path_excel_open, sheet_name='Arkusz1')
 df = df.astype(str)
+df = df.fillna('')
 print(df)
 
 df_name = "arkusz_test"
@@ -53,21 +55,15 @@ writer.book = excel_book
 writer.sheets = dict((ws.title, ws) for ws in excel_book.worksheets)
 
 while 1:
-  
 
     def search_value(keyword, df):
         search_value = '|'.join(keyword)
         searched = df[df['RMA'].str.contains(search_value, na=False)]
         return searched
 
-
     # podaj wartość do wpisania
     search_word = input("podaj numer RMA \n")
     search_df = search_value([search_word], df)
-    
-    
-
-
 
     if search_word == "":
         print("koniec")
@@ -76,10 +72,14 @@ while 1:
 
         df1 = pd.DataFrame(search_df, columns=['RMA', 'Nazwa urządzenia',
                            'Nr seryjny przyjęty', 'Nr seryjny wydany', 'UWAGI'])
+        df1 = df1.replace('nan', '')
         writer.save()
         df2 = pd.read_excel(path_excel_save, sheet_name='arkusz_test')
         df3 = df2.append(df1, ignore_index=True)
+        df2 = df2.fillna('')
         df3.to_excel(writer, sheet_name='arkusz_test', index=False)
+
+        df3 = df3.fillna('')
         print(df3)
 
         writer.save()
