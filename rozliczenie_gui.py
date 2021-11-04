@@ -10,7 +10,7 @@ import openpyxl
 import re
 from pandastable import *
 from tkinter import *
-
+import subprocess
 # from openpyxl import load_workbook
 
 import datetime
@@ -209,12 +209,12 @@ def print_rma_click():
 def write_to_doc():
     context = {'date': ct, 'cr_number': cr2, 'nazwa': client, 'data': ct}
     doc.render(context)
-    doc.save("rozliczenie " + cr2 + " " + client +".docx")
+    save = doc.save("rozliczenie_" + cr2 + "_" + client +".docx")
     del excel_book[df_name]
     excel_book.save(path_excel_save)
     excel_book.close()
-    
-    messagebox.showinfo("zapisano", "plik zapisany w " + path_docx + "\\rozliczenie " + cr2 + " " + client +".docx")
+    messagebox.showinfo("zapisano", "plik zapisany w " + path_docx2 + "\\rozliczenie_" + cr2 + "_" + client +".docx")
+    os.system("start " + path_docx2 + "\\rozliczenie_" + cr2 + "_" + client +".docx") 
     main_window.destroy()
 
 
