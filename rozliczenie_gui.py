@@ -62,8 +62,10 @@ def press_klient(event):
     # e_klient.delete(0, "end")
     e_klient.insert(0, '')
     my_label3 = Label(main_window, text=client)
+    my_label3.place(x=20, y=60)
     my_label3.pack()
-    
+    pt = Table(frame, dataframe=df)
+    pt.show()
 
 
 def click_klient():
@@ -72,13 +74,18 @@ def click_klient():
     # e_klient.delete(0, "end")
     e_klient.insert(0, '')
     my_label3 = Label(main_window, text=client)
+    my_label3.place(x=20, y=60)
     my_label3.pack()
-    
+    pt = Table(frame, dataframe=df)
+    pt.show()
 
 
 e_klient.bind('<Return>', press_klient)
 button1 = Button(main_window, text="klient", command=click_klient) 
 button1.pack()
+
+
+
 
 # nazwa_klienta = input("podaj klienta \n")
 
@@ -93,12 +100,17 @@ df = pd.read_excel(path_excel_open, sheet_name='Arkusz1')
 df = df.astype(str)
 df = df.fillna('')
 
-frame = Frame(main_window)
-frame.pack_propagate(False)
-frame.pack(fill='both',)
 
-pt = Table(frame, dataframe=df)
-pt.show()
+
+frame = Frame(main_window)
+frame = LabelFrame(main_window, text="Tabela ze wszystkimi Numerami RMA")
+frame.pack_propagate(False)
+frame.pack(fill='both')
+
+
+
+# pt = Table(frame, dataframe=df)
+# pt.show()
 
 
 
@@ -128,16 +140,9 @@ l_rozliczenie.pack()
 e_rma = Entry(main_window, width=70, borderwidth=2)
 e_rma.insert(0, "Podaj numer RMA")
 e_rma.pack()
-# search_word = input("podaj numer RMA \n")
 
 
-        # if search_word == "":
-        #     print("koniec")
-        #     break
-        # else:
 def print_rma(event):
-
-
 
     if e_rma.get() == "":
         messagebox.showerror(title="Error", message="Brak wartości")
@@ -172,8 +177,6 @@ def print_rma(event):
 
 def print_rma_click():
     
-
-
     if e_rma.get() == "":
         messagebox.showerror(title="Error", message="Brak wartości")
     else:       
@@ -209,7 +212,7 @@ def print_rma_click():
 def write_to_doc():
     context = {'date': ct, 'cr_number': cr2, 'nazwa': client, 'data': ct}
     doc.render(context)
-    save = doc.save("rozliczenie_" + cr2 + "_" + client +".docx")
+    doc.save("rozliczenie_" + cr2 + "_" + client +".docx")
     del excel_book[df_name]
     excel_book.save(path_excel_save)
     excel_book.close()
@@ -231,8 +234,10 @@ button_rma_show = Button(main_window, text="Dodaj numer RMA", command=print_rma_
 button_rma_show.pack()
 
 frame_rma = Frame(main_window)
+frame_rma = LabelFrame(main_window, text="Numery RMA do wpisania do dokumentu")
 frame_rma.pack_propagate(False)
 frame_rma.pack(fill='both',)
+
 
 button_save_doc = Button(main_window, text="Zapisz i zamknij", command=write_to_doc) 
 button_save_doc.pack()
