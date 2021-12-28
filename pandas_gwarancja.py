@@ -47,6 +47,12 @@ for j in range(df1.shape[-1]):
 for i in range(df1.shape[0]):
     for j in range(df1.shape[-1]):
         table.cell(i+1, j).text = str(df1.values[i, j])
+        
+n=(i+1)
+for k in range(1,n):
+    m = str(k) 
+    print("test_" + m +"")
+
 
 
 print(str(df1.values[i, j]))

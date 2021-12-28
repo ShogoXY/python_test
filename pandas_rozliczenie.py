@@ -7,12 +7,20 @@ import numpy as np
 from numpy import nan
 import openpyxl
 import re
+from tkinter import *
 # from openpyxl import load_workbook
 
 import datetime
 import time
 from re import search
 import keyboard
+
+# ################## GUI ##################
+main_window = Tk()
+main_window.title("Program do rozliczeń")
+main_window.geometry("500x500")
+
+
 
 # file path
 path_excel_open = "C:\\Users\\Dariusz\\github\\python_test\\serwi.xlsx"
@@ -84,7 +92,6 @@ while 1:
 
         writer.save()
 
-    # save nd exit excel
         continue
 
 for i in range(df3.shape[0]):
@@ -99,3 +106,21 @@ doc.save("rozliczenie " + cr2 + " " + nazwa+".docx")
 del excel_book[df_name]
 excel_book.save(path_excel_save)
 excel_book.close()
+
+
+
+
+def my_click():
+    label=Label(main_window, text="wynik to " + c)
+    label.pack()
+
+my_label = Label(main_window, text=ct)
+my_label2 = Label(main_window, text=cr2)
+my_button = Button(main_window, text="click me", command=my_click)
+e1= Entry(main_window, text="a")
+
+e1.pack()
+
+my_label.pack()
+my_button.pack()
+main_window.mainloop()
